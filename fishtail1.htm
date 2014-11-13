@@ -1,0 +1,155 @@
+<style>
+	svg {
+		margin: 0;
+	}
+	
+	circle {
+		fill: #dad;
+	}
+
+	path {
+		stroke-width: 0;		
+		stroke-linecap: round;
+	}
+
+</style>
+
+
+<script type="text/javascript">
+
+	function viz0(container) 
+	{
+		var width = 600,
+			height = 300;	
+
+		//The data for our line
+		var lineData = 
+		[ 
+			{ "x":0, "y":0}, 
+			{ "x":15, "y":-.5}, 
+			{ "x":25, "y":-1.5}, 
+			{ "x":35, "y":-2.6}, 
+			{ "x":50, "y":-4.5}, 
+			{ "x":75, "y":-8.5},
+			{ "x":105, "y":-13},
+			{ "x":130, "y":-5}, 
+			{ "x":130, "y":5},
+			{ "x":105, "y":13}, 
+			{ "x":75, "y":8.5},
+			{ "x":50, "y":4.5}, 
+			{ "x":35, "y":2.6}, 
+			{ "x":25, "y":1.5}, 
+			{ "x":15, "y":0.5}, 
+			{ "x":0, "y":0}		
+		];
+
+		var lineData1 = 
+		[ 
+			{ "x":9, "y":-18}, 
+			{ "x":16.5, "y":-7.8}, 
+			{ "x":26.5, "y":-3.7}, 
+			{ "x":35.5, "y":-3.6}, 
+			{ "x":50, "y":-4.5}, 
+			{ "x":75, "y":-8.5},
+			{ "x":105, "y":-13},
+			{ "x":130, "y":-5}, 
+			{ "x":130, "y":5},
+			{ "x":105, "y":13}, 
+			{ "x":75, "y":8.5},
+			{ "x":50, "y":4.5}, 
+			{ "x":35.5, "y":2.3}, 
+			{ "x":26.7, "y":0.35}, 
+			{ "x":16.5, "y":-7.4}, 
+			{ "x":9, "y":-18}		
+		];
+			
+		var lineData2 = 
+		[ 
+			{ "x":9, "y":18}, 
+			{ "x":16.5, "y":7.4}, 
+			{ "x":26.7, "y":-0.35}, 
+			{ "x":35.5, "y":-2.3}, 
+			{ "x":50, "y":-4.5}, 
+			{ "x":75, "y":-8.5},
+			{ "x":105, "y":-13},
+			{ "x":130, "y":-5}, 
+			{ "x":130, "y":5},
+			{ "x":105, "y":13}, 
+			{ "x":75, "y":8.5},
+			{ "x":50, "y":4.5}, 
+			{ "x":35.5, "y":3.6}, 
+			{ "x":26.5, "y":3.7}, 
+			{ "x":16.5, "y":7.8}, 
+			{ "x":9, "y":18}	
+		];
+			
+		//This is the accessor function we talked about above
+		var tailPath = d3.svg.line()
+			.x(function(d) { return d.x; })
+			.y(function(d) { return d.y; })
+			.interpolate("basis");
+
+			
+		// create canvas
+		var svgContainer = d3.select(container).append("svg")
+			.attr("width", width)
+			.attr("height", height);
+
+		// line SVG Path
+		var tail = svgContainer.append("path")
+			.attr("d", tailPath(lineData))
+			.attr("stroke", "blue")
+			.attr("stroke-width", 1)
+			.attr("fill", "blue")
+			.attr("transform", "translate(20,60)");
+		
+		console.log(tail);
+		n=0;
+		a=0;
+		b=0;
+		
+		setInterval(mycode, 800);
+		function mycode() 
+		{
+			console.log(n);
+			
+			if (a===0) b=1;
+			if (a===1) b=-1;
+					
+			if (n===0)
+			{
+				tail.transition()
+					.attr("d", tailPath(lineData))
+					//.attr("fill", "orange")
+					.ease('in-out')
+					.duration(800);
+				n=n+b;
+				
+			} else if (n===1) {
+				tail.transition()
+					.attr("d", tailPath(lineData1))
+					//.attr("fill", "orange")
+					.ease('in-out')
+					.duration(800);
+				
+				n=n-1;
+				a=1;
+
+			} else if (n===-1) {
+				tail.transition()
+					.attr("d", tailPath(lineData2))
+					//.attr("fill", "orange")
+					.ease('in-out')
+					.duration(800);
+				
+				n=n+1;
+				a=0;
+			}		
+		}
+	}
+
+	viz0('header');
+	
+	
+	
+</script>

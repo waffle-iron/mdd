@@ -1,0 +1,22 @@
+<script type="text/javascript">
+	
+	// Transitioning lines
+	var svg=d3.select("header").append("svg");
+	
+	var myLines=svg.selectAll("line")
+		.data(d3.range(10))
+		.enter()
+		.append("line")
+		.attr("x1",20)
+		.attr("x2",500)
+		.attr("y1",function(d) {return 20*d;})
+		.attr("y2",function(d) {return 20*d;});
+	
+	myLines.style("stroke","orange").style("stroke-width",String);
+
+	myLines.transition()
+		.style("stroke",d3.scale.category10())
+		.style("stroke-width",function(d) {return 10-d + "px";})
+		.duration(1000);
+
+</script>
